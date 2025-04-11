@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field # BaseModel serve per creare modelli di dati
 from typing import Annotated # Annotated serve per aggiungere annotazioni ai tipi di dati
 
 class Book(BaseModel):
