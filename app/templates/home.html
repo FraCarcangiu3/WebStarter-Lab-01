@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libreria Online</title>
+    <style>
+        /* Variabili CSS */
+        :root {
+            --blu-principale: #3498db;
+            --blu-scuro: #2c3e50;
+            --rosso: #e74c3c;
+            --testo-colore: #333;
+            --sfondo-chiaro: #f9f9f9;
+            --bianco: #ffffff;
+            --ombra: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --bordo-arrotondato: 8px;
+        }
+
+        /* Reset e stile base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: var(--testo-colore);
+            background-color: var(--sfondo-chiaro);
+            padding-bottom: 2rem;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--blu-scuro);
+            color: var(--bianco);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--ombra);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .sottotitolo {
+            font-size: 1.2rem;
+        }
+
+        /* Container principale */
+        .contenitore {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Sezioni */
+        section {
+            background-color: var(--bianco);
+            border-radius: var(--bordo-arrotondato);
+            box-shadow: var(--ombra);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .titolo-sezione {
+            color: var(--blu-scuro);
+            border-bottom: 2px solid var(--blu-principale);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .titolo-sezione button {
+            font-size: 0.85rem;
+        }
+
+        /* Tabella libri */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background-color: #f2f8fd;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .azioni-libro {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Stelle recensione */
+        .stelle {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+
+        .no-recensione {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        /* Form per aggiungere/modificare libri */
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        form .larghezza-piena {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: var(--blu-scuro);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: var(--bordo-arrotondato);
+            font-size: 1rem;
+        }
+
+        input:focus, select:focus {
+            border-color: var(--blu-principale);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        /* Pulsanti */
+        button {
+            padding: 0.7rem 1.2rem;
+            background-color: var(--blu-principale);
+            color: var(--bianco);
+            border: none;
+            border-radius: var(--bordo-arrotondato);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        button.secondario {
+            background-color: #95a5a6;
+        }
+
+        button.secondario:hover {
+            background-color: #7f8c8d;
+        }
+
+        button.elimina {
+            background-color: var(--rosso);
+        }
+
+        button.elimina:hover {
+            background-color: #c0392b;
+        }
+
+        /* Recensioni */
+        .valutazione {
+            display: flex;
+            gap: 0.3rem;
+        }
+
+        .stella {
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ddd;
+        }
+
+        .stella.attiva, .stella:hover {
+            color: #ffc107;
+        }
+
+        /* Messaggio di avviso */
+        .avviso {
+            padding: 1rem;
+            border-radius: var(--bordo-arrotondato);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .avviso.successo {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .avviso.errore {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* Responsività */
+        @media (max-width: 768px) {
+            form {
+                grid-template-columns: 1fr;
+            }
+
+            .azioni-libro {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="contenitore">
+            <h1>Libreria Online</h1>
+            <p class="sottotitolo">Gestione del catalogo libri</p>
+        </div>
+    </header>
+
+    <main class="contenitore">
+        <!-- Sezione per visualizzare i libri -->
+        <section id="sezione-libri">
+            <div class="titolo-sezione">
+                <h2>Catalogo Libri</h2>
+                <div>
+                    <button id="pulsante-ordina">Ordina per recensione</button>
+                    <button id="pulsante-aggiungi">Aggiungi Libro</button>
+                </div>
+            </div>
+            <div id="contenitore-avvisi"></div>
+            <table id="tabella-libri">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Titolo</th>
+                        <th>Autore</th>
+                        <th>Recensione</th>
+                        <th>Azioni</th>
+                    </tr>
+                </thead>
+                <tbody id="lista-libri">
+                    <!-- I libri verranno inseriti qui dinamicamente -->
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Sezione per aggiungere/modificare un libro -->
+        <section id="sezione-form-libro" style="display: none;">
+            <div class="titolo-sezione">
+                <h2 id="titolo-form">Aggiungi Libro</h2>
+            </div>
+            <form id="form-libro">
+                <div>
+                    <label for="id-libro">ID</label>
+                    <input type="number" id="id-libro" required min="0">
+                </div>
+                <div>
+                    <label for="titolo-libro">Titolo</label>
+                    <input type="text" id="titolo-libro" required>
+                </div>
+                <div>
+                    <label for="autore-libro">Autore</label>
+                    <input type="text" id="autore-libro" required>
+                </div>
+                <div class="larghezza-piena">
+                    <button type="submit" id="salva-libro">Salva</button>
+                    <button type="button" id="annulla-form" class="secondario">Annulla</button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Sezione per aggiungere una recensione -->
+        <section id="sezione-form-recensione" style="display: none;">
+            <div class="titolo-sezione">
+                <h2>Aggiungi Recensione</h2>
+            </div>
+            <form id="form-recensione">
+                <input type="hidden" id="id-libro-recensione">
+                <div class="larghezza-piena">
+                    <label for="recensione-libro">Valutazione</label>
+                    <div class="valutazione" id="valutazione-stelle">
+                        <span class="stella" data-value="1">★</span>
+                        <span class="stella" data-value="2">★</span>
+                        <span class="stella" data-value="3">★</span>
+                        <span class="stella" data-value="4">★</span>
+                        <span class="stella" data-value="5">★</span>
+                    </div>
+                </div>
+                <div class="larghezza-piena">
+                    <button type="submit" id="salva-recensione">Salva Recensione</button>
+                    <button type="button" id="annulla-recensione" class="secondario">Annulla</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    <script>
+        // API URLs
+        const API_URL = '/books';
+
+        // Elementi DOM
+        const sezioneLibri = document.getElementById('sezione-libri');
+        const sezioneFormLibro = document.getElementById('sezione-form-libro');
+        const sezioneFormRecensione = document.getElementById('sezione-form-recensione');
+        const listaLibri = document.getElementById('lista-libri');
+        const formLibro = document.getElementById('form-libro');
+        const formRecensione = document.getElementById('form-recensione');
+        const titoloForm = document.getElementById('titolo-form');
+        const pulsanteOrdina = document.getElementById('pulsante-ordina');
+        const pulsanteAggiungi = document.getElementById('pulsante-aggiungi');
+        const pulsanteAnnullaForm = document.getElementById('annulla-form');
+        const pulsanteAnnullaRecensione = document.getElementById('annulla-recensione');
+        const contenitoreAvvisi = document.getElementById('contenitore-avvisi');
+
+        // Stato dell'applicazione
+        let staModificando = false;
+        let ordinamentoAttuale = false;
+        let valutazioneSelezionata = 0;
+
+        // Carica i libri all'avvio
+        document.addEventListener('DOMContentLoaded', () => {
+            caricaLibri();
+            impostaGestoriEventi();
+        });
+
+        // Configurazione degli event listener
+        function impostaGestoriEventi() {
+            // Pulsante Ordinamento
+            pulsanteOrdina.addEventListener('click', () => {
+                ordinamentoAttuale = !ordinamentoAttuale;
+                caricaLibri();
+            });
+
+            // Pulsante Aggiungi Libro
+            pulsanteAggiungi.addEventListener('click', () => {
+                mostraFormLibro();
+            });
+
+            // Pulsanti Annulla
+            pulsanteAnnullaForm.addEventListener('click', nascondiFormLibro);
+            pulsanteAnnullaRecensione.addEventListener('click', nascondiFormRecensione);
+
+            // Form Libro
+            formLibro.addEventListener('submit', gestisciInvioLibro);
+            
+            // Form Recensione
+            formRecensione.addEventListener('submit', gestisciInvioRecensione);
+
+            // Stelle per la recensione
+            document.getElementById('valutazione-stelle').addEventListener('click', (e) => {
+                if (e.target.classList.contains('stella')) {
+                    valutazioneSelezionata = parseInt(e.target.dataset.value);
+                    aggiornaVisualizzazioneStelle();
+                }
+            });
+        }
+
+        // Funzioni per la gestione dei libri
+        async function caricaLibri() {
+            try {
+                const risposta = await fetch(`${API_URL}?sort=${ordinamentoAttuale}`);
+                if (!risposta.ok) {
+                    throw new Error('Errore durante il caricamento dei libri');
+                }
+                const libri = await risposta.json();
+                renderizzaLibri(libri);
+            } catch (error) {
+                mostraAvviso(error.message, 'errore');
+            }
+        }
+
+        function renderizzaLibri(libri) {
+            listaLibri.innerHTML = '';
+            
+            if (libri.length === 0) {
+                listaLibri.innerHTML = '<tr><td colspan="5">Nessun libro trovato</td></tr>';
+                return;
+            }
+
+            libri.forEach(libro => {
+                const riga = document.createElement('tr');
+                riga.innerHTML = `
+                    <td>${libro.id}</td>
+                    <td>${libro.title}</td>
+                    <td>${libro.author}</td>
+                    <td>${renderizzaValutazione(libro.review)}</td>
+                    <td class="azioni-libro">
+                        <button class="pulsante-modifica" data-id="${libro.id}">Modifica</button>
+                        <button class="pulsante-recensione" data-id="${libro.id}">Recensisci</button>
+                        <button class="pulsante-elimina elimina" data-id="${libro.id}">Elimina</button>
+                    </td>
+                `;
+                listaLibri.appendChild(riga);
+            });
+
+            // Aggiungi event listener per i pulsanti nelle righe
+            document.querySelectorAll('.pulsante-modifica').forEach(btn => {
+                btn.addEventListener('click', () => modificaLibro(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.pulsante-recensione').forEach(btn => {
+                btn.addEventListener('click', () => mostraFormRecensione(parseInt(btn.dataset.id)));
+            });
+
+            document.querySelectorAll('.pulsante-elimina').forEach(btn => {
+                btn.addEventListener('click', () => eliminaLibro(parseInt(btn.dataset.id)));
+            });
+        }
+
+        function renderizzaValutazione(valutazione) {
+            if (!valutazione) {
+                return '<span class="no-recensione">Nessuna recensione</span>';
+            }
+            
+            let stelle = '';
+            for (let i = 0; i < valutazione; i++) {
+                stelle += '★';
+            }
+            return `<span class="stelle">${stelle}</span> (${valutazione}/5)`;
+        }
+
+        async function gestisciInvioLibro(e) {
+            e.preventDefault();
+
+            const datiLibro = {
+                id: parseInt(document.getElementById('id-libro').value),
+                title: document.getElementById('titolo-libro').value,
+                author: document.getElementById('autore-libro').value,
+                review: null
+            };
+
+            try {
+                let risposta;
+                if (staModificando) {
+                    risposta = await fetch(`${API_URL}/${datiLibro.id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datiLibro)
+                    });
+                } else {
+                    risposta = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(datiLibro)
+                    });
+                }
+
+                if (!risposta.ok) {
+                    const errore = await risposta.json();
+                    throw new Error(errore.detail || 'Si è verificato un errore');
+                }
+
+                mostraAvviso(
+                    staModificando ? 'Libro aggiornato con successo' : 'Libro aggiunto con successo', 
+                    'successo'
+                );
+                nascondiFormLibro();
+                caricaLibri();
+            } catch (error) {
+                mostraAvviso(error.message, 'errore');
+            }
+        }
+
+        async function modificaLibro(id) {
+            try {
+                const risposta = await fetch(`${API_URL}/${id}`);
+                if (!risposta.ok) {
+                    throw new Error('Libro non trovato');
+                }
+                const libro = await risposta.json();
+                
+                document.getElementById('id-libro').value = libro.id;
+                document.getElementById('titolo-libro').value = libro.title;
+                document.getElementById('autore-libro').value = libro.author;
+                
+                document.getElementById('id-libro').disabled = true;
+                titoloForm.textContent = 'Modifica Libro';
+                staModificando = true;
+                mostraFormLibro();
+            } catch (error) {
+                mostraAvviso(error.message, 'errore');
+            }
+        }
+
+        async function eliminaLibro(id) {
+            if (!confirm('Sei sicuro di voler eliminare questo libro?')) {
+                return;
+            }
+
+            try {
+                const risposta = await fetch(`${API_URL}/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!risposta.ok) {
+                    throw new Error('Errore durante l\'eliminazione del libro');
+                }
+
+                mostraAvviso('Libro eliminato con successo', 'successo');
+                caricaLibri();
+            } catch (error) {
+                mostraAvviso(error.message, 'errore');
+            }
+        }
+
+        // Funzioni per la gestione delle recensioni
+        function mostraFormRecensione(idLibro) {
+            document.getElementById('id-libro-recensione').value = idLibro;
+            valutazioneSelezionata = 0;
+            aggiornaVisualizzazioneStelle();
+            
+            sezioneLibri.style.display = 'none';
+            sezioneFormLibro.style.display = 'none';
+            sezioneFormRecensione.style.display = 'block';
+        }
+
+        function aggiornaVisualizzazioneStelle() {
+            const stelle = document.querySelectorAll('.stella');
+            stelle.forEach((stella, indice) => {
+                stella.classList.toggle('attiva', indice < valutazioneSelezionata);
+            });
+        }
+
+        async function gestisciInvioRecensione(e) {
+            e.preventDefault();
+            
+            if (valutazioneSelezionata === 0) {
+                mostraAvviso('Seleziona una valutazione da 1 a 5', 'errore');
+                return;
+            }
+
+            const idLibro = document.getElementById('id-libro-recensione').value;
+            
+            try {
+                const risposta = await fetch(`${API_URL}/${idLibro}/review`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ review: valutazioneSelezionata })
+                });
+
+                if (!risposta.ok) {
+                    throw new Error('Errore durante l\'aggiunta della recensione');
+                }
+
+                mostraAvviso('Recensione aggiunta con successo', 'successo');
+                nascondiFormRecensione();
+                caricaLibri();
+            } catch (error) {
+                mostraAvviso(error.message, 'errore');
+            }
+        }
+
+        // Funzioni UI
+        function mostraFormLibro() {
+            if (!staModificando) {
+                formLibro.reset();
+                document.getElementById('id-libro').disabled = false;
+                titoloForm.textContent = 'Aggiungi Libro';
+            }
+            
+            sezioneLibri.style.display = 'none';
+            sezioneFormRecensione.style.display = 'none';
+            sezioneFormLibro.style.display = 'block';
+        }
+
+        function nascondiFormLibro() {
+            formLibro.reset();
+            staModificando = false;
+            
+            sezioneFormRecensione.style.display = 'none';
+            sezioneFormLibro.style.display = 'none';
+            sezioneLibri.style.display = 'block';
+        }
+
+        function nascondiFormRecensione() {
+            formRecensione.reset();
+            valutazioneSelezionata = 0;
+            
+            sezioneFormRecensione.style.display = 'none';
+            sezioneFormLibro.style.display = 'none';
+            sezioneLibri.style.display = 'block';
+        }
+
+        function mostraAvviso(messaggio, tipo) {
+            const avviso = document.createElement('div');
+            avviso.className = `avviso ${tipo}`;
+            avviso.innerHTML = `
+                <span>${messaggio}</span>
+                <button class="chiudi-avviso">×</button>
+            `;
+
+            contenitoreAvvisi.innerHTML = '';
+            contenitoreAvvisi.appendChild(avviso);
+
+            const pulsanteChiudi = avviso.querySelector('.chiudi-avviso');
+            pulsanteChiudi.addEventListener('click', () => {
+                contenitoreAvvisi.innerHTML = '';
+            });
+
+            setTimeout(() => {
+                if (contenitoreAvvisi.contains(avviso)) {
+                    contenitoreAvvisi.innerHTML = '';
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

@@ -19,7 +19,16 @@ router = APIRouter(prefix="/books") #questo routers lavora sotto il prefisso /bo
 
 
 @router.get("/")
-def get_all_books() -> list[Book]: #list[book] è il dato che FastAPI converte in JSON
+def get_all_books(
+        sort:bool = False
+        #sort è un parametro che permette di ordinare i libri in base al titolo, di default è False
+) -> list[Book]: #list[book] è il dato che FastAPI converte in JSON
+    if sort:
+        """
+        Restituisce la lista di tutti i libri disponibili ordinati per review
+        """
+        return sorted(books.values(), key=lambda book: book.review) #lambda
+
     """Restituisce la lista di tutti i libri disponibili"""
     return list(books.values()) #Mi restituisce i valori del dizionario books
 
