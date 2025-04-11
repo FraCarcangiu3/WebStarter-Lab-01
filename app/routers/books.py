@@ -51,6 +51,48 @@ def add_review(
     except KeyError:
         raise HTTPException(status_code=404, detail="Libro non trovato")
     # in caso venga inserito un id non disponibile in data/books.py
-    except ValidationError:
-        raise HTTPException(status_code=400, detail="Richiesta non valida")
 
+
+@router.post("/")
+def add_book(book: Book): #book è un istanza della classe Book
+    """
+    Add a new book to the list
+    """
+    if book.id in books:
+        raise HTTPException(status_code=403, detail="Book ID already exists")
+    books[book.id] = book
+    return "Book added successfully"
+
+@router.put("/{id}")
+def update_book(
+    id: Annotated[int, Path(description="The ID of the book")],
+    book: Book #FastAPI converte automaticamente il corpo della richiesta in un oggetto Book
+):
+    """
+    Update the book with the given ID
+    """
+    if not id in books:
+        raise HTTPException(status_code=404, detail="Book not found")
+    books[id] = book
+    return "Book updated successfully"
+
+@router.delete("/")
+def delete_all_book():
+    """
+    Delete all books from the list
+    """
+    books.clear()
+    return "All books deleted successfully"
+
+@router.delete("/{id}")
+def delete_book(
+    id: Annotated[int, Path(description="The ID of the book")]
+):
+    """
+    Delete the book with the given ID
+    """
+    try:
+        del books[id]
+        return "Book deleted successfully"
+    except KeyError:
+        raise HTTPException(status_code=404, detail="Book not found")

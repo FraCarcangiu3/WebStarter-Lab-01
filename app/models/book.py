@@ -10,5 +10,3 @@ class Book(BaseModel):
 
 
 
-book = Book(id=1, title="titolo", author="autore", review=5)
-print(book)
