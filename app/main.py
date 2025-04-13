@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from routers import books
 
+<<<<<<< HEAD
 # === IMPORTAZIONE LIBRERIE PER IL FRONTEND ===
 # HTMLResponse: Classe che rappresenta una risposta HTTP in formato HTML
 from fastapi.responses import HTMLResponse
@@ -10,14 +11,20 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 # StaticFiles: Per servire file statici come immagini, CSS e JavaScript
 from fastapi.staticfiles import StaticFiles
+=======
+#IMPORTO LA LIBRERIA FASTAPI PER CREARE UN'APPLICAZIONE WEB - parte frontend
+from fastapi.responses import HTMLResponse #HTMLResponse è una classe di FastAPI che rappresenta una risposta HTTP in formato HTML
+from fastapi.templating import Jinja2Templates #Jinja2Templates è una classe di FastAPI che gestisce i template HTML
+from fastapi import Request #Request è una classe di FastAPI che rappresenta una richiesta HTTP
+###################################################
+>>>>>>> parent of 6c9e7c0 (update commit)
 
-# === CONFIGURAZIONE DELL'APPLICAZIONE ===
-# Creazione dell'istanza principale dell'applicazione FastAPI
+#IMPORTO LA LIBRERIA FASTAPI PER CREARE UN'APPLICAZIONE WEB - parte backend
 app = FastAPI()
-# Aggiunta del router dedicato alla gestione dei libri
-# Il parametro 'tags' serve per raggruppare le rotte nella documentazione
-app.include_router(books.router, tags=["books"])
+app.include_router(books.router, tags=["books"]) #includo il router per la gestione dei libri,
+                                                 # tags è un modo per raggruppare le rotte in base alla loro funzionalità
 
+<<<<<<< HEAD
 # Configurazione per servire i file statici
 # Il primo parametro è il prefisso URL, il secondo è il percorso della cartella
 app.mount("/static", StaticFiles(directory="app/static"), name="static")
@@ -25,24 +32,22 @@ app.mount("/static", StaticFiles(directory="app/static"), name="static")
 # === CONFIGURAZIONE FRONT-END ===
 # Configurazione del sistema di template Jinja2, specificando la directory dove si trovano i file HTML
 templates = Jinja2Templates(directory="app/templates")
+=======
+>>>>>>> parent of 6c9e7c0 (update commit)
 
-# Definizione della rotta principale (homepage)
-# Il decoratore @app.get specifica che questa funzione risponde alle richieste GET
-# response_class=HTMLResponse indica che restituiremo una pagina HTML
-@app.get("/", response_class=HTMLResponse)
+#####PARTE FRONT END###################################################################################################
+
+templates = Jinja2Templates(directory="app/templates") #creo un oggetto Jinja2Templates per gestire i template HTML
+@app.get("/", response_class=HTMLResponse) #sto dicendo che codifico questa classe in HTML
 def home(request: Request):
-    # Renderizza il template home.html, passando l'oggetto request come parametro
-    # (necessario per Jinja2 per generare correttamente i link e i form)
     return templates.TemplateResponse(
         request=request, name="home.html"
     )
 
-# Questo blocco viene eseguito solo quando il file viene eseguito direttamente
-# (non quando viene importato da un altro modulo)
-if __name__ == "__main__":
-    # Uvicorn è un server ASGI (Asynchronous Server Gateway Interface) per applicazioni Python
-    import uvicorn
-    # Avvia il server con l'app FastAPI
-    # Il parametro reload=True permette il ricaricamento automatico quando i file vengono modificati
-    # (utile durante lo sviluppo)
-    uvicorn.run(app, reload=True)
+
+
+
+
+if __name__ == "__main__": #è importante perchè esegue il codice che verrà dopo solo se eseguiamo questo file come script principale
+    import uvicorn #uvicorn è un server ASGI per eseguire applicazioni web
+    uvicorn.run(app, reload=True) #lanciamo l'applicazione FastAPI con il server uvicorn

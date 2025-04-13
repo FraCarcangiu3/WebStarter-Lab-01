@@ -1,129 +1,110 @@
-# === FILE PER LA GESTIONE DELLE API DEI LIBRI ===
-# Questo file definisce tutte le rotte (endpoint) relative alla gestione dei libri
-# con percorso base /books
-
-# Importazioni per la gestione degli errori
+# Sto creando un file per gli endpoint delle API per la gestione dei libri che partona da /books
 from fastapi.exceptions import RequestValidationError
 from requests import RequestException
 
-# Importazioni dei modelli dati e dei "database"
+#importo le librerie necessarie per la creazione dell'APIk = books[id]
 from models.book import Book
 from models.review import Review
 from data.books import books
 
-# Importazioni delle utility di FastAPI
-# - APIRouter: Permette di organizzare le rotte in gruppi logici
-# - HTTPException: Per generare errori HTTP significativi
-# - Path: Per validare e documentare i parametri di percorso
-from fastapi import APIRouter, HTTPException, Path
-# ValidationError: Per gestire errori di validazione dei dati inviati
-from pydantic import ValidationError
-# Annotated: Per aggiungere metadati ai tipi (usato per documentazione e validazione)
-from typing import Annotated
+#importo le librerie necessarie per la creazione dell'API
+from fastapi import APIRouter, HTTPException, Path #APIRouter serve per creare un router per la gestione delle rotte, HTTPException serve per gestire le eccezioni HTTP, Path serve per definire i parametri delle rotte
+from pydantic import ValidationError # ValidationError serve per gestire gli errori di validazione dei dati
+from typing import Annotated # Annotated serve per aggiungere annotazioni ai tipi di dati
 
-# === CONFIGURAZIONE DEL ROUTER ===
-# Creazione del router per la gestione dei libri
-# prefix="/books": Specifica che tutte le rotte definite avranno il prefisso /books
-# (es. /books/, /books/1, ecc.)
-router = APIRouter(prefix="/books")
 
-# === DEFINIZIONE DELLE ROTTE (ENDPOINTS) ===
+#questo è il router per la gestione delle rotte relative ai libri ovvero mi permette di definire le rotte
 
-# --- GET: Ottieni tutti i libri ---
+router = APIRouter(prefix="/books") #questo routers lavora sotto il prefisso /books
+"""
+APIRouter: È un oggetto che consente di organizzare e raggruppare le rotte in un'applicazione FastAPI. Questo è utile per mantenere il codice modulare e leggibile.
+prefix="/books": Specifica che tutte le rotte definite in questo router avranno il prefisso /books. Ad esempio:
+"""
+
 @router.get("/")
 def get_all_books(
-        sort: bool = False  # Parametro opzionale per ordinare i libri per recensione
-) -> list[Book]:  # La funzione restituirà una lista di oggetti Book
+        sort:bool = False
+        #sort è un parametro che permette di ordinare i libri in base al titolo, di default è False
+) -> list[Book]: #list[book] è il dato che FastAPI converte in JSON
     if sort:
-        # Se il parametro sort è True, ordina i libri per valore della recensione
-        # La funzione lambda indica di usare il campo 'review' per l'ordinamento
-        return sorted(books.values(), key=lambda book: book.review)
+        """
+        Restituisce la lista di tutti i libri disponibili ordinati per review
+        """
+        return sorted(books.values(), key=lambda book: book.review) #KEY è una funzione che permette di ordinare i libri in base alla review,
 
-    # Altrimenti, restituisce tutti i libri senza ordinamento
-    # Converte i valori del dizionario 'books' in una lista
-    return list(books.values())
+    """Restituisce la lista di tutti i libri disponibili"""
+    return list(books.values()) #Mi restituisce i valori del dizionario books
 
-# --- GET: Ottieni un libro specifico tramite ID ---
-@router.get("/{id}")  # {id} è un parametro di percorso (URL)
-def get_book_by_id(id: Annotated[int, Path(description="L'ID del libro da cercare")]) -> Book:
+@router.get("/{id}") # tra parentesi graffe fa una ricerca parametrica
+def get_book_by_id(id: Annotated[int, Path(description="The ID of the book")])-> Book:
     """
-    Restituisce il libro con l'ID specificato
+    Retrunr the book with the given ID
     """
     try:
-        return books[id]  # Cerca il libro nel dizionario usando l'ID come chiave
+        return books[id]
     except KeyError:
-        # Se il libro non esiste (chiave non trovata), genera un errore 404 (Not Found)
-        raise HTTPException(status_code=404, detail="Libro non trovato")
+        raise HTTPException(status_code=404, detail="Book not found" )
+    # in caso venga inserito un id non disponibile in data/books.py
+    # restituisce un errrore
 
-# --- POST: Aggiungi una recensione a un libro esistente ---
+
 @router.post("/{id}/review")
 def add_review(
-    id: Annotated[int, Path(description="L'ID del libro da recensire")],
-    review: Review  # Questo parametro viene estratto automaticamente dal corpo della richiesta JSON
+    id: Annotated[int, Path(description="The ID of the book")],
+    review: Review #FastAPI converte automaticamente il corpo della richiesta in un oggetto Review
 ):
     """
-    Aggiunge una recensione (valutazione da 1 a 5) al libro con l'ID specificato
+    Add a review to the book with the given ID
     """
     try:
-        # Aggiorna il campo review del libro con il valore fornito
         books[id].review = review.review
-        return "Recensione aggiunta con successo"
+        #stiamo sovrascrivendo il valore della review della classe Book con il valore review della classe Review
+        return "Review added successfully"
     except KeyError:
-        # Se il libro non esiste, genera un errore 404
         raise HTTPException(status_code=404, detail="Libro non trovato")
+    # in caso venga inserito un id non disponibile in data/books.py
 
-# --- POST: Aggiungi un nuovo libro ---
+
 @router.post("/")
-def add_book(book: Book):  # L'oggetto Book viene deserializzato automaticamente dal JSON
+def add_book(book: Book): #book è un istanza della classe Book
     """
-    Aggiunge un nuovo libro alla collezione
+    Add a new book to the list
     """
-    # Verifica se esiste già un libro con lo stesso ID
     if book.id in books:
-        # Se esiste, genera un errore 403 (Forbidden)
-        raise HTTPException(status_code=403, detail="Esiste già un libro con questo ID")
-    
-    # Altrimenti, aggiunge il libro al dizionario
+        raise HTTPException(status_code=403, detail="Book ID already exists")
     books[book.id] = book
-    return "Libro aggiunto con successo"
+    return "Book added successfully"
 
-# --- PUT: Aggiorna un libro esistente ---
 @router.put("/{id}")
 def update_book(
-    id: Annotated[int, Path(description="L'ID del libro da aggiornare")],
-    book: Book  # Dati aggiornati del libro dal corpo della richiesta
+    id: Annotated[int, Path(description="The ID of the book")],
+    book: Book #FastAPI converte automaticamente il corpo della richiesta in un oggetto Book
 ):
     """
-    Aggiorna i dati di un libro esistente
+    Update the book with the given ID
     """
-    # Verifica se il libro esiste
     if not id in books:
-        raise HTTPException(status_code=404, detail="Libro non trovato")
-    
-    # Aggiorna i dati del libro
+        raise HTTPException(status_code=404, detail="Book not found")
     books[id] = book
-    return "Libro aggiornato con successo"
+    return "Book updated successfully"
 
-# --- DELETE: Elimina tutti i libri ---
 @router.delete("/")
 def delete_all_book():
     """
-    Elimina tutti i libri dalla collezione
+    Delete all books from the list
     """
-    books.clear()  # Svuota il dizionario
-    return "Tutti i libri sono stati eliminati con successo"
+    books.clear()
+    return "All books deleted successfully"
 
-# --- DELETE: Elimina un libro specifico ---
 @router.delete("/{id}")
 def delete_book(
-    id: Annotated[int, Path(description="L'ID del libro da eliminare")]
+    id: Annotated[int, Path(description="The ID of the book")]
 ):
     """
-    Elimina il libro con l'ID specificato
+    Delete the book with the given ID
     """
     try:
-        del books[id]  # Elimina l'elemento dal dizionario
-        return "Libro eliminato con successo"
+        del books[id]
+        return "Book deleted successfully"
     except KeyError:
-        # Se il libro non esiste, genera un errore 404
-        raise HTTPException(status_code=404, detail="Libro non trovato")
+        raise HTTPException(status_code=404, detail="Book not found")

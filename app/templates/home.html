@@ -1,226 +1,201 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <!-- Metadati del documento -->
-    <meta charset="UTF-8"><!-- Definisce la codifica dei caratteri -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!-- Rende la pagina responsive su dispositivi mobili -->
-    <title>Libreria Online</title><!-- Titolo della pagina che appare nella scheda del browser -->
-    
-    <!-- Stili CSS incorporati direttamente nel documento -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libreria Online</title>
     <style>
-        /* === DEFINIZIONE DELLE VARIABILI CSS ===
-           Le variabili CSS permettono di definire valori che possono essere 
-           riutilizzati in tutto il foglio di stile */
+        /* Variabili CSS */
         :root {
-            --blu-principale: #3498db;   /* Colore primario per pulsanti e accenti */
-            --blu-scuro: #2c3e50;        /* Colore secondario per header e titoli */
-            --rosso: #e74c3c;            /* Colore per azioni pericolose (es. elimina) */
-            --testo-colore: #333;        /* Colore del testo principale */
-            --sfondo-chiaro: #f9f9f9;    /* Colore di sfondo della pagina */
-            --bianco: #ffffff;           /* Colore bianco per elementi in primo piano */
-            --ombra: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Effetto ombra per elementi */
-            --bordo-arrotondato: 8px;    /* Raggio per angoli arrotondati */
+            --blu-principale: #3498db;
+            --blu-scuro: #2c3e50;
+            --rosso: #e74c3c;
+            --testo-colore: #333;
+            --sfondo-chiaro: #f9f9f9;
+            --bianco: #ffffff;
+            --ombra: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --bordo-arrotondato: 8px;
         }
 
-        /* === RESET DEGLI STILI DI DEFAULT DEL BROWSER ===
-           Rimuove margini e spaziature predefiniti per garantire coerenza tra browser */
+        /* Reset e stile base */
         * {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;  /* Fa sì che padding e bordi siano inclusi nelle dimensioni */
+            box-sizing: border-box;
         }
 
-        /* === STILE DEL CORPO DELLA PAGINA === */
         body {
-            font-family: Arial, Helvetica, sans-serif;  /* Font sans-serif per migliore leggibilità */
-            line-height: 1.6;  /* Interlinea del testo per migliorare la leggibilità */
-            color: var(--testo-colore);  /* Colore del testo principale */
-            background-color: var(--sfondo-chiaro);  /* Colore di sfondo della pagina */
-            padding-bottom: 2rem;  /* Spaziatura inferiore della pagina */
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            color: var(--testo-colore);
+            background-color: var(--sfondo-chiaro);
+            padding-bottom: 2rem;
         }
 
-        /* === STILE DELL'INTESTAZIONE === */
+        /* Header */
         header {
-            background-color: var(--blu-scuro);  /* Colore di sfondo dell'header */
-            color: var(--bianco);  /* Colore del testo nell'header */
-            text-align: center;  /* Allineamento centrale del testo */
-            padding: 1.5rem 0;  /* Spaziatura interna sopra e sotto */
-            margin-bottom: 2rem;  /* Spaziatura sotto l'header */
-            box-shadow: var(--ombra);  /* Effetto ombra per dare profondità */
+            background-color: var(--blu-scuro);
+            color: var(--bianco);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: var(--ombra);
         }
 
-        /* Titolo principale nell'header */
         h1 {
-            font-size: 2.5rem;  /* Dimensione del carattere del titolo principale */
-            margin-bottom: 0.5rem;  /* Spaziatura sotto il titolo */
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* Sottotitolo nell'header */
         .sottotitolo {
-            font-size: 1.2rem;  /* Dimensione del carattere del sottotitolo */
+            font-size: 1.2rem;
         }
 
-        /* === CONTENITORE PRINCIPALE ===
-           Limita la larghezza del contenuto e lo centra nella pagina */
+        /* Container principale */
         .contenitore {
-            max-width: 1200px;  /* Larghezza massima del contenuto */
-            margin: 0 auto;  /* Centra il contenitore orizzontalmente */
-            padding: 0 1.5rem;  /* Spaziatura interna laterale */
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        /* === STILE DELLE SEZIONI === */
+        /* Sezioni */
         section {
-            background-color: var(--bianco);  /* Sfondo bianco per le sezioni */
-            border-radius: var(--bordo-arrotondato);  /* Angoli arrotondati */
-            box-shadow: var(--ombra);  /* Effetto ombra per dare profondità */
-            padding: 1.5rem;  /* Spaziatura interna */
-            margin-bottom: 2rem;  /* Spaziatura sotto la sezione */
+            background-color: var(--bianco);
+            border-radius: var(--bordo-arrotondato);
+            box-shadow: var(--ombra);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        /* Titolo delle sezioni con linea divisoria */
         .titolo-sezione {
-            color: var(--blu-scuro);  /* Colore del testo del titolo */
-            border-bottom: 2px solid var(--blu-principale);  /* Linea divisoria sotto il titolo */
-            padding-bottom: 0.5rem;  /* Spaziatura sotto il titolo */
-            margin-bottom: 1.5rem;  /* Margine sotto il titolo */
-            display: flex;  /* Layout flessibile per allineare elementi */
-            justify-content: space-between;  /* Distribuisce lo spazio tra titolo e pulsanti */
-            align-items: center;  /* Allinea verticalmente gli elementi */
+            color: var(--blu-scuro);
+            border-bottom: 2px solid var(--blu-principale);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* Pulsanti nel titolo della sezione */
         .titolo-sezione button {
-            font-size: 0.85rem;  /* Dimensione del carattere dei pulsanti */
+            font-size: 0.85rem;
         }
 
-        /* === STILE DELLA TABELLA DEI LIBRI === */
+        /* Tabella libri */
         table {
-            width: 100%;  /* Occupa tutta la larghezza disponibile */
-            border-collapse: collapse;  /* Unisce i bordi adiacenti della tabella */
-            margin-bottom: 1.5rem;  /* Spaziatura sotto la tabella */
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
         }
 
-        /* Celle di intestazione e dati */
         th, td {
-            padding: 0.75rem;  /* Spaziatura interna nelle celle */
-            text-align: left;  /* Allineamento del testo a sinistra */
-            border-bottom: 1px solid #e0e0e0;  /* Linea divisoria sotto ogni riga */
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
         }
 
-        /* Celle di intestazione */
         th {
-            background-color: #f2f8fd;  /* Colore di sfondo per le intestazioni */
-            font-weight: bold;  /* Testo in grassetto */
+            background-color: #f2f8fd;
+            font-weight: bold;
         }
 
-        /* Effetto hover sulle righe della tabella */
         tr:hover {
-            background-color: #f5f5f5;  /* Cambia colore quando il mouse passa sopra */
+            background-color: #f5f5f5;
         }
 
-        /* Contenitore per i pulsanti di azione nella tabella */
         .azioni-libro {
-            display: flex;  /* Layout flessibile per i pulsanti */
-            gap: 0.5rem;  /* Spazio tra i pulsanti */
+            display: flex;
+            gap: 0.5rem;
         }
 
-        /* === STILE DELLE RECENSIONI === */
-        /* Stelle delle recensioni */
+        /* Stelle recensione */
         .stelle {
-            color: #ffc107;  /* Colore giallo per le stelle (recensioni) */
-            font-size: 1.2rem;  /* Dimensione delle stelle */
+            color: #ffc107;
+            font-size: 1.2rem;
         }
 
-        /* Stile per quando non c'è recensione */
         .no-recensione {
-            color: #ccc;  /* Colore grigio chiaro */
-            font-style: italic;  /* Testo in corsivo */
+            color: #ccc;
+            font-style: italic;
         }
 
-        /* === STILE DEI FORM === */
+        /* Form per aggiungere/modificare libri */
         form {
-            display: grid;  /* Layout a griglia per organizzare i campi del form */
-            grid-template-columns: 1fr 1fr;  /* Due colonne di uguale larghezza */
-            gap: 1rem;  /* Spazio tra gli elementi del form */
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
         }
 
-        /* Elementi che devono occupare l'intera larghezza del form */
         form .larghezza-piena {
-            grid-column: 1 / -1;  /* Dalla prima all'ultima colonna */
+            grid-column: 1 / -1;
         }
 
-        /* Etichette dei campi del form */
         label {
-            display: block;  /* Rende le etichette elementi a blocco (una sotto l'altra) */
-            font-weight: bold;  /* Testo in grassetto */
-            margin-bottom: 0.3rem;  /* Spazio sotto l'etichetta */
-            color: var(--blu-scuro);  /* Colore del testo */
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.3rem;
+            color: var(--blu-scuro);
         }
 
-        /* Campi di input e select */
         input, select {
-            width: 100%;  /* Occupa tutta la larghezza disponibile */
-            padding: 0.7rem;  /* Spaziatura interna */
-            border: 1px solid #ddd;  /* Bordo sottile grigio */
-            border-radius: var(--bordo-arrotondato);  /* Angoli arrotondati */
-            font-size: 1rem;  /* Dimensione del testo */
+            width: 100%;
+            padding: 0.7rem;
+            border: 1px solid #ddd;
+            border-radius: var(--bordo-arrotondato);
+            font-size: 1rem;
         }
 
-        /* Stile per i campi quando hanno il focus (sono selezionati) */
         input:focus, select:focus {
-            border-color: var(--blu-principale);  /* Cambia colore del bordo */
-            outline: none;  /* Rimuove il contorno predefinito del browser */
-            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);  /* Aggiunge un'ombra sottile */
+            border-color: var(--blu-principale);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
         }
 
-        /* === STILE DEI PULSANTI === */
+        /* Pulsanti */
         button {
-            padding: 0.7rem 1.2rem;  /* Spaziatura interna */
-            background-color: var(--blu-principale);  /* Colore di sfondo */
-            color: var(--bianco);  /* Colore del testo */
-            border: none;  /* Rimuove il bordo */
-            border-radius: var(--bordo-arrotondato);  /* Angoli arrotondati */
-            cursor: pointer;  /* Cambia il cursore quando si passa sopra */
-            font-weight: bold;  /* Testo in grassetto */
+            padding: 0.7rem 1.2rem;
+            background-color: var(--blu-principale);
+            color: var(--bianco);
+            border: none;
+            border-radius: var(--bordo-arrotondato);
+            cursor: pointer;
+            font-weight: bold;
         }
 
-        /* Effetto hover sui pulsanti */
         button:hover {
-            background-color: #2980b9;  /* Colore più scuro quando il mouse passa sopra */
+            background-color: #2980b9;
         }
 
-        /* Pulsanti secondari (meno importanti) */
         button.secondario {
-            background-color: #95a5a6;  /* Colore di sfondo grigio */
+            background-color: #95a5a6;
         }
 
         button.secondario:hover {
-            background-color: #7f8c8d;  /* Colore più scuro quando il mouse passa sopra */
+            background-color: #7f8c8d;
         }
 
-        /* Pulsanti per eliminare (azioni pericolose) */
         button.elimina {
-            background-color: var(--rosso);  /* Colore di sfondo rosso */
+            background-color: var(--rosso);
         }
 
         button.elimina:hover {
-            background-color: #c0392b;  /* Colore più scuro quando il mouse passa sopra */
+            background-color: #c0392b;
         }
 
-        /* === SISTEMA DI VALUTAZIONE A STELLE === */
+        /* Recensioni */
         .valutazione {
-            display: flex;  /* Layout flessibile per le stelle */
-            gap: 0.3rem;  /* Spazio tra le stelle */
+            display: flex;
+            gap: 0.3rem;
         }
 
         .stella {
-            cursor: pointer;  /* Cambia il cursore quando si passa sopra */
-            font-size: 1.5rem;  /* Dimensione delle stelle */
-            color: #ddd;  /* Colore grigio chiaro (stelle inattive) */
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #ddd;
         }
 
         .stella.attiva, .stella:hover {
-            color: #ffc107;  /* Colore giallo (stelle attive o hover) */
+            color: #ffc107;
         }
 
         /* Messaggio di avviso */
