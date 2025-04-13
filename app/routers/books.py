@@ -27,7 +27,7 @@ def get_all_books(
         """
         Restituisce la lista di tutti i libri disponibili ordinati per review
         """
-        return sorted(books.values(), key=lambda book: book.review) #lambda
+        return sorted(books.values(), key=lambda book: book.review) #KEY è una funzione che permette di ordinare i libri in base alla review,
 
     """Restituisce la lista di tutti i libri disponibili"""
     return list(books.values()) #Mi restituisce i valori del dizionario books

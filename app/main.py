@@ -5,7 +5,9 @@ from routers import books
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from fastapi import Request #Request è una classe di FastAPI che rappresenta una richiesta HTTP
+###################################################
 
+#IMPORTO LA LIBRERIA FASTAPI PER CREARE UN'APPLICAZIONE WEB - parte backend
 app = FastAPI()
 app.include_router(books.router, tags=["books"]) #includo il router per la gestione dei libri,
                                                  # tags è un modo per raggruppare le rotte in base alla loro funzionalità
