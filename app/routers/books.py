@@ -8,13 +8,13 @@ from models.review import Review
 from data.books import books
 
 #importo le librerie necessarie per la creazione dell'API
-from fastapi import APIRouter, HTTPException, Path
+from fastapi import APIRouter, HTTPException, Path #APIRouter serve per creare un router per la gestione delle rotte, HTTPException serve per gestire le eccezioni HTTP, Path serve per definire i parametri delle rotte
 from pydantic import ValidationError # ValidationError serve per gestire gli errori di validazione dei dati
 from typing import Annotated # Annotated serve per aggiungere annotazioni ai tipi di dati
 
-from models.review import Review
 
 #questo è il router per la gestione delle rotte relative ai libri ovvero mi permette di definire le rotte
+
 router = APIRouter(prefix="/books") #questo routers lavora sotto il prefisso /books
 """
 APIRouter: È un oggetto che consente di organizzare e raggruppare le rotte in un'applicazione FastAPI. Questo è utile per mantenere il codice modulare e leggibile.

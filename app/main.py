@@ -2,8 +2,8 @@ from fastapi import FastAPI
 from routers import books
 
 #IMPORTO LA LIBRERIA FASTAPI PER CREARE UN'APPLICAZIONE WEB - parte frontend
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse #HTMLResponse è una classe di FastAPI che rappresenta una risposta HTTP in formato HTML
+from fastapi.templating import Jinja2Templates #Jinja2Templates è una classe di FastAPI che gestisce i template HTML
 from fastapi import Request #Request è una classe di FastAPI che rappresenta una richiesta HTTP
 ###################################################
 
