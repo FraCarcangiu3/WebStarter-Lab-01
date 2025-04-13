@@ -255,13 +255,79 @@
                 flex-direction: column;
             }
         }
+
+        /* Stile per il logo nell'header */
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid var(--bianco);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Stile per il footer con info sviluppatore */
+        footer {
+            background-color: var(--blu-scuro);
+            color: var(--bianco);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 3rem;
+            box-shadow: var(--ombra);
+        }
+        
+        .dev-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .dev-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+            border: 2px solid var(--bianco);
+        }
+        
+        .social-icons {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .social-icons a {
+            color: var(--bianco);
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .social-icons a:hover {
+            color: var(--blu-principale);
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="contenitore">
-            <h1>Libreria Online</h1>
-            <p class="sottotitolo">Gestione del catalogo libri</p>
+            <div class="logo-container">
+                <!-- Logo della scimmia -->
+                <img src="/static/images/monkey_logo.png" alt="Logo Scimmia" class="logo" onerror="this.src='https://via.placeholder.com/80x80?text=Logo';this.onerror='';">
+                <div>
+                    <h1>Libreria Online</h1>
+                    <p class="sottotitolo">Gestione del catalogo libri</p>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -290,6 +356,32 @@
                     <!-- I libri verranno inseriti qui dinamicamente -->
                 </tbody>
             </table>
+        </section>
+
+        <!-- Sezione info sul progetto -->
+        <section id="sezione-info">
+            <div class="titolo-sezione">
+                <h2>Informazioni sul Progetto</h2>
+            </div>
+            <div style="display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <img src="/static/images/monkey_money.png" alt="Scimmia con soldi" 
+                         style="max-width: 200px; border-radius: 8px; box-shadow: var(--ombra);"
+                         onerror="this.src='https://via.placeholder.com/200x200?text=MonkeyMoney';this.onerror='';">
+                </div>
+                <div style="flex: 2; min-width: 300px;">
+                    <h3 style="color: var(--blu-scuro); margin-bottom: 1rem;">Libreria Online: Progetto Didattico</h3>
+                    <p style="margin-bottom: 1rem;">Questo progetto è stato sviluppato come parte del Laboratorio di Programmazione Web 2024-2025. Dimostra l'implementazione di un'applicazione web full-stack utilizzando FastAPI per il backend e HTML/CSS/JavaScript per il frontend.</p>
+                    <h4 style="color: var(--blu-scuro); margin-bottom: 0.5rem; margin-top: 1rem;">Funzionalità principali:</h4>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>Gestione completa dei libri (CRUD)</li>
+                        <li>Sistema di recensioni a stelle</li>
+                        <li>Interfaccia responsive e user-friendly</li>
+                        <li>API RESTful per la comunicazione client-server</li>
+                    </ul>
+                    <p><strong>Sviluppatore:</strong> Francesco Carcangiu</p>
+                </div>
+            </div>
         </section>
 
         <!-- Sezione per aggiungere/modificare un libro -->
@@ -658,5 +750,24 @@
             }, 5000);
         }
     </script>
+    
+    <!-- Footer con informazioni sullo sviluppatore -->
+    <footer>
+        <div class="contenitore">
+            <div class="dev-info">
+                <!-- Immagine della scimmia con laptop -->
+                <img src="/static/images/monkey_developer.png" alt="Sviluppatore" class="dev-img" onerror="this.src='https://via.placeholder.com/60x60?text=Dev';this.onerror='';">
+                <p>Sviluppato con ❤️ da <strong>Francesco Carcangiu</strong></p>
+                <p class="sottotitolo">© 2024 - Tutti i diritti riservati</p>
+                
+                <!-- Link social (placeholder) -->
+                <div class="social-icons">
+                    <a href="#" title="GitHub"><i>GitHub</i></a>
+                    <a href="#" title="LinkedIn"><i>LinkedIn</i></a>
+                    <a href="#" title="Email"><i>Email</i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

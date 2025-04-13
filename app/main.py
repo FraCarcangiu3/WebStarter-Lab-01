@@ -8,6 +8,8 @@ from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 # Request: Classe che rappresenta una richiesta HTTP inviata dal client
 from fastapi import Request
+# StaticFiles: Per servire file statici come immagini, CSS e JavaScript
+from fastapi.staticfiles import StaticFiles
 
 # === CONFIGURAZIONE DELL'APPLICAZIONE ===
 # Creazione dell'istanza principale dell'applicazione FastAPI
@@ -15,6 +17,10 @@ app = FastAPI()
 # Aggiunta del router dedicato alla gestione dei libri
 # Il parametro 'tags' serve per raggruppare le rotte nella documentazione
 app.include_router(books.router, tags=["books"])
+
+# Configurazione per servire i file statici
+# Il primo parametro è il prefisso URL, il secondo è il percorso della cartella
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 
 # === CONFIGURAZIONE FRONT-END ===
 # Configurazione del sistema di template Jinja2, specificando la directory dove si trovano i file HTML
