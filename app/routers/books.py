@@ -16,7 +16,10 @@ from models.review import Review
 
 #questo è il router per la gestione delle rotte relative ai libri ovvero mi permette di definire le rotte
 router = APIRouter(prefix="/books") #questo routers lavora sotto il prefisso /books
-
+"""
+APIRouter: È un oggetto che consente di organizzare e raggruppare le rotte in un'applicazione FastAPI. Questo è utile per mantenere il codice modulare e leggibile.
+prefix="/books": Specifica che tutte le rotte definite in questo router avranno il prefisso /books. Ad esempio:
+"""
 
 @router.get("/")
 def get_all_books(
