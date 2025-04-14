@@ -1,4 +1,4 @@
-// API URLs
+// URL delle API
 const API_URL = '/books';
 
 // Elementi DOM
@@ -14,6 +14,7 @@ const pulsanteAggiungi = document.getElementById('pulsante-aggiungi');
 const pulsanteAnnullaForm = document.getElementById('annulla-form');
 const pulsanteAnnullaRecensione = document.getElementById('annulla-recensione');
 const contenitoreAvvisi = document.getElementById('contenitore-avvisi');
+const tabellaLibri = document.getElementById('tabella-libri');
 
 // Stato dell'applicazione
 let staModificando = false;
@@ -248,7 +249,7 @@ async function gestisciInvioRecensione(e) {
         });
 
         if (!risposta.ok) {
-            throw new Error('Errore durante l\'aggiunta della recensione');
+            throw new Error('Errore durante l\'invio della recensione');
         }
 
         mostraAvviso('Recensione aggiunta con successo', 'successo');
@@ -259,56 +260,54 @@ async function gestisciInvioRecensione(e) {
     }
 }
 
-// Funzioni UI
+// Funzioni per la gestione dei form
 function mostraFormLibro() {
-    if (!staModificando) {
-        formLibro.reset();
-        document.getElementById('id-libro').disabled = false;
-        titoloForm.textContent = 'Aggiungi Libro';
-    }
+    // Resetta il form
+    formLibro.reset();
+    document.getElementById('id-libro').disabled = false;
+    titoloForm.textContent = 'Aggiungi Libro';
+    staModificando = false;
     
+    // Mostra il form e nascondi altre sezioni
     sezioneLibri.style.display = 'none';
     sezioneFormRecensione.style.display = 'none';
     sezioneFormLibro.style.display = 'block';
 }
 
 function nascondiFormLibro() {
-    formLibro.reset();
-    staModificando = false;
-    
-    sezioneFormRecensione.style.display = 'none';
+    // Nascondi il form e mostra la lista libri
     sezioneFormLibro.style.display = 'none';
+    sezioneFormRecensione.style.display = 'none';
     sezioneLibri.style.display = 'block';
 }
 
 function nascondiFormRecensione() {
-    formRecensione.reset();
-    valutazioneSelezionata = 0;
-    
+    // Nascondi il form recensione e mostra la lista libri
     sezioneFormRecensione.style.display = 'none';
     sezioneFormLibro.style.display = 'none';
     sezioneLibri.style.display = 'block';
 }
 
+// Funzione per mostrare messaggi di avviso all'utente
 function mostraAvviso(messaggio, tipo) {
     const avviso = document.createElement('div');
-    avviso.className = `avviso ${tipo}`;
+    avviso.className = `alert ${tipo}`;
     avviso.innerHTML = `
-        <span>${messaggio}</span>
+        ${messaggio}
         <button class="chiudi-avviso">×</button>
     `;
-
-    contenitoreAvvisi.innerHTML = '';
+    
     contenitoreAvvisi.appendChild(avviso);
-
-    const pulsanteChiudi = avviso.querySelector('.chiudi-avviso');
-    pulsanteChiudi.addEventListener('click', () => {
-        contenitoreAvvisi.innerHTML = '';
+    
+    // Aggiungi event listener per chiudere l'avviso
+    avviso.querySelector('.chiudi-avviso').addEventListener('click', () => {
+        avviso.remove();
     });
-
+    
+    // Rimuovi automaticamente l'avviso dopo 5 secondi
     setTimeout(() => {
-        if (contenitoreAvvisi.contains(avviso)) {
-            contenitoreAvvisi.innerHTML = '';
+        if (avviso.parentNode) {
+            avviso.remove();
         }
     }, 5000);
 } 

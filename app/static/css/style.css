@@ -1,19 +1,19 @@
-/* === DEFINIZIONE DELLE VARIABILI CSS ===
-   Le variabili CSS permettono di definire valori che possono essere 
-   riutilizzati in tutto il foglio di stile */
+/* === DEFINIZIONE VARIABILI CSS ===
+   Le variabili CSS permettono di definire valori che possono 
+   essere riutilizzati in tutto il foglio di stile */
 :root {
-    --blu-principale: #3498db;   /* Colore primario per pulsanti e accenti */
-    --blu-scuro: #2c3e50;        /* Colore secondario per header e titoli */
-    --rosso: #e74c3c;            /* Colore per azioni pericolose (es. elimina) */
-    --testo-colore: #333;        /* Colore del testo principale */
-    --sfondo-chiaro: #f9f9f9;    /* Colore di sfondo della pagina */
-    --bianco: #ffffff;           /* Colore bianco per elementi in primo piano */
-    --ombra: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Effetto ombra per elementi */
-    --bordo-arrotondato: 8px;    /* Raggio per angoli arrotondati */
+    --blu-primario: #3498db;   /* Colore primario per pulsanti e accenti */
+    --blu-scuro: #2c3e50;      /* Colore secondario per header e titoli */
+    --rosso: #e74c3c;          /* Colore per azioni pericolose (es. eliminazione) */
+    --colore-testo: #333;      /* Colore principale del testo */
+    --sfondo-chiaro: #f9f9f9;  /* Colore di sfondo della pagina */
+    --bianco: #ffffff;         /* Colore bianco per elementi in primo piano */
+    --ombra: 0 2px 8px rgba(0, 0, 0, 0.1);  /* Effetto ombra per gli elementi */
+    --bordo-arrotondato: 8px;  /* Raggio per angoli arrotondati */
 }
 
-/* === RESET DEGLI STILI DI DEFAULT DEL BROWSER ===
-   Rimuove margini e spaziature predefiniti per garantire coerenza tra browser */
+/* === RESET DEGLI STILI PREDEFINITI DEL BROWSER ===
+   Rimuove margini e spaziature predefinite per garantire coerenza tra i browser */
 * {
     margin: 0;
     padding: 0;
@@ -23,36 +23,36 @@
 /* === STILE DEL CORPO DELLA PAGINA === */
 body {
     font-family: Arial, Helvetica, sans-serif;  /* Font sans-serif per migliore leggibilità */
-    line-height: 1.6;  /* Interlinea del testo per migliorare la leggibilità */
-    color: var(--testo-colore);  /* Colore del testo principale */
+    line-height: 1.6;  /* Altezza linea del testo per migliorare la leggibilità */
+    color: var(--colore-testo);  /* Colore principale del testo */
     background-color: var(--sfondo-chiaro);  /* Colore di sfondo della pagina */
     padding-bottom: 2rem;  /* Spaziatura inferiore della pagina */
 }
 
-/* === STILE DELL'INTESTAZIONE === */
+/* === STILE DELL'HEADER === */
 header {
     background-color: var(--blu-scuro);  /* Colore di sfondo dell'header */
     color: var(--bianco);  /* Colore del testo nell'header */
-    text-align: center;  /* Allineamento centrale del testo */
+    text-align: center;  /* Allineamento centrato del testo */
     padding: 1.5rem 0;  /* Spaziatura interna sopra e sotto */
     margin-bottom: 2rem;  /* Spaziatura sotto l'header */
-    box-shadow: var(--ombra);  /* Effetto ombra per dare profondità */
+    box-shadow: var(--ombra);  /* Effetto ombra per profondità */
 }
 
 /* Titolo principale nell'header */
 h1 {
-    font-size: 2.5rem;  /* Dimensione del carattere del titolo principale */
+    font-size: 2.5rem;  /* Dimensione del font del titolo principale */
     margin-bottom: 0.5rem;  /* Spaziatura sotto il titolo */
 }
 
 /* Sottotitolo nell'header */
-.sottotitolo {
-    font-size: 1.2rem;  /* Dimensione del carattere del sottotitolo */
+.subtitle {
+    font-size: 1.2rem;  /* Dimensione del font del sottotitolo */
 }
 
 /* === CONTENITORE PRINCIPALE ===
    Limita la larghezza del contenuto e lo centra nella pagina */
-.contenitore {
+.container {
     max-width: 1200px;  /* Larghezza massima del contenuto */
     margin: 0 auto;  /* Centra il contenitore orizzontalmente */
     padding: 0 1.5rem;  /* Spaziatura interna laterale */
@@ -62,42 +62,42 @@ h1 {
 section {
     background-color: var(--bianco);  /* Sfondo bianco per le sezioni */
     border-radius: var(--bordo-arrotondato);  /* Angoli arrotondati */
-    box-shadow: var(--ombra);  /* Effetto ombra per dare profondità */
+    box-shadow: var(--ombra);  /* Effetto ombra per profondità */
     padding: 1.5rem;  /* Spaziatura interna */
     margin-bottom: 2rem;  /* Spaziatura sotto la sezione */
 }
 
-/* Titolo delle sezioni con linea divisoria */
-.titolo-sezione {
+/* Titolo della sezione con linea divisoria */
+.section-title {
     color: var(--blu-scuro);  /* Colore del testo del titolo */
-    border-bottom: 2px solid var(--blu-principale);  /* Linea divisoria sotto il titolo */
+    border-bottom: 2px solid var(--blu-primario);  /* Linea divisoria sotto il titolo */
     padding-bottom: 0.5rem;  /* Spaziatura sotto il titolo */
     margin-bottom: 1.5rem;  /* Margine sotto il titolo */
-    display: flex;  /* Layout flessibile per allineare elementi */
+    display: flex;  /* Layout flessibile per allineare gli elementi */
     justify-content: space-between;  /* Distribuisce lo spazio tra titolo e pulsanti */
     align-items: center;  /* Allinea verticalmente gli elementi */
 }
 
 /* Pulsanti nel titolo della sezione */
-.titolo-sezione button {
-    font-size: 0.85rem;  /* Dimensione del carattere dei pulsanti */
+.section-title button {
+    font-size: 0.85rem;  /* Dimensione del font dei pulsanti */
 }
 
-/* === STILE DELLA TABELLA DEI LIBRI === */
+/* === STILE DELLA TABELLA LIBRI === */
 table {
     width: 100%;  /* Occupa tutta la larghezza disponibile */
     border-collapse: collapse;  /* Unisce i bordi adiacenti della tabella */
     margin-bottom: 1.5rem;  /* Spaziatura sotto la tabella */
 }
 
-/* Celle di intestazione e dati */
+/* Celle dell'intestazione e dei dati */
 th, td {
-    padding: 0.75rem;  /* Spaziatura interna nelle celle */
-    text-align: left;  /* Allineamento del testo a sinistra */
+    padding: 0.75rem;  /* Spaziatura interna delle celle */
+    text-align: left;  /* Allineamento a sinistra del testo */
     border-bottom: 1px solid #e0e0e0;  /* Linea divisoria sotto ogni riga */
 }
 
-/* Celle di intestazione */
+/* Celle dell'intestazione */
 th {
     background-color: #f2f8fd;  /* Colore di sfondo per le intestazioni */
     font-weight: bold;  /* Testo in grassetto */
@@ -134,14 +134,14 @@ form {
     gap: 1rem;  /* Spazio tra gli elementi del form */
 }
 
-/* Elementi che devono occupare l'intera larghezza del form */
-form .larghezza-piena {
+/* Elementi che dovrebbero occupare l'intera larghezza del form */
+form .full-width {
     grid-column: 1 / -1;  /* Dalla prima all'ultima colonna */
 }
 
 /* Etichette dei campi del form */
 label {
-    display: block;  /* Rende le etichette elementi a blocco (una sotto l'altra) */
+    display: block;  /* Rende le etichette elementi a blocco (uno sotto l'altro) */
     font-weight: bold;  /* Testo in grassetto */
     margin-bottom: 0.3rem;  /* Spazio sotto l'etichetta */
     color: var(--blu-scuro);  /* Colore del testo */
@@ -158,7 +158,7 @@ input, select {
 
 /* Stile per i campi quando hanno il focus (sono selezionati) */
 input:focus, select:focus {
-    border-color: var(--blu-principale);  /* Cambia colore del bordo */
+    border-color: var(--blu-primario);  /* Cambia colore del bordo */
     outline: none;  /* Rimuove il contorno predefinito del browser */
     box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);  /* Aggiunge un'ombra sottile */
 }
@@ -166,11 +166,11 @@ input:focus, select:focus {
 /* === STILE DEI PULSANTI === */
 button {
     padding: 0.7rem 1.2rem;  /* Spaziatura interna */
-    background-color: var(--blu-principale);  /* Colore di sfondo */
+    background-color: var(--blu-primario);  /* Colore di sfondo */
     color: var(--bianco);  /* Colore del testo */
     border: none;  /* Rimuove il bordo */
     border-radius: var(--bordo-arrotondato);  /* Angoli arrotondati */
-    cursor: pointer;  /* Cambia il cursore quando si passa sopra */
+    cursor: pointer;  /* Cambia cursore quando passa sopra */
     font-weight: bold;  /* Testo in grassetto */
 }
 
@@ -180,15 +180,15 @@ button:hover {
 }
 
 /* Pulsanti secondari (meno importanti) */
-button.secondario {
+button.secondary {
     background-color: #95a5a6;  /* Colore di sfondo grigio */
 }
 
-button.secondario:hover {
+button.secondary:hover {
     background-color: #7f8c8d;  /* Colore più scuro quando il mouse passa sopra */
 }
 
-/* Pulsanti per eliminare (azioni pericolose) */
+/* Pulsanti di eliminazione (azioni pericolose) */
 button.elimina {
     background-color: var(--rosso);  /* Colore di sfondo rosso */
 }
@@ -204,7 +204,7 @@ button.elimina:hover {
 }
 
 .stella {
-    cursor: pointer;  /* Cambia il cursore quando si passa sopra */
+    cursor: pointer;  /* Cambia cursore quando passa sopra */
     font-size: 1.5rem;  /* Dimensione delle stelle */
     color: #ddd;  /* Colore grigio chiaro (stelle inattive) */
 }
@@ -214,7 +214,7 @@ button.elimina:hover {
 }
 
 /* Messaggio di avviso */
-.avviso {
+.alert {
     padding: 1rem;
     border-radius: var(--bordo-arrotondato);
     margin-bottom: 1.5rem;
@@ -223,13 +223,13 @@ button.elimina:hover {
     justify-content: space-between;
 }
 
-.avviso.successo {
+.alert.successo {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
-.avviso.errore {
+.alert.errore {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
@@ -250,7 +250,6 @@ button.elimina:hover {
 footer {
     text-align: center;
     padding: 1.5rem 0;
-    margin-top: 2rem;
-    background-color: var(--blu-scuro);
-    color: var(--bianco);
+    color: #7f8c8d;
+    font-size: 0.9rem;
 } 
