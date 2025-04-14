@@ -37,7 +37,10 @@ def get_all_books(
     if sort:
         # Se il parametro sort è True, ordina i libri per valore della recensione
         # Utilizza una funzione di ordinamento che gestisce i valori None (ponendoli all'inizio)
-        return sorted(books.values(), key=lambda book: book.review if book.review is not None else -1)
+        return sorted(books.values(), 
+                      key=lambda 
+                      book: book.review  if book.review is not None 
+                      else -1)
 
     # Altrimenti, restituisce tutti i libri senza ordinamento
     # Converte i valori del dizionario 'books' in una lista
