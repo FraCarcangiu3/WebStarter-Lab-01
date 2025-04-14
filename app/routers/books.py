@@ -36,8 +36,8 @@ def get_all_books(
 ) -> list[Book]:  # La funzione restituirà una lista di oggetti Book
     if sort:
         # Se il parametro sort è True, ordina i libri per valore della recensione
-        # La funzione lambda indica di usare il campo 'review' per l'ordinamento
-        return sorted(books.values(), key=lambda book: book.review) #sorted si aspetta di ricevere un iterabile (books.value() che rappresenta la lista di tutti i valori) e una chiave (review)
+        # Utilizza una funzione di ordinamento che gestisce i valori None (ponendoli all'inizio)
+        return sorted(books.values(), key=lambda book: book.review if book.review is not None else -1)
 
     # Altrimenti, restituisce tutti i libri senza ordinamento
     # Converte i valori del dizionario 'books' in una lista
